@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { SmoothScrollProvider, useSmoothScroll } from './context/SmoothScrollContext';
+import { ThemeProvider } from './context/ThemeContext';
+import { BackgroundGrid } from './components/BackgroundGrid';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProjectShowcase } from './components/ProjectShowcase';
@@ -11,18 +14,32 @@ import { Footer } from './components/Footer';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { Project } from './types';
 
-export function App() {
+function PortfolioContent() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const { stop, start } = useSmoothScroll();
+
+  const handleOpenProject = (project: Project) => {
+    setSelectedProject(project);
+    stop();
+  };
+
+  const handleCloseProject = () => {
+    setSelectedProject(null);
+    start();
+  };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
-      {/* Sticky Top Navigation */}
+    <div className="min-h-screen relative flex flex-col bg-[#FAFAFA] dark:bg-[#0B0B0B] text-[#171717] dark:text-[#F5F5F5] font-sans transition-colors duration-200">
+      {/* Global Subtle Background Grid */}
+      <BackgroundGrid />
+
+      {/* Floating Pill Top Navigation */}
       <Navbar />
 
       {/* Main Single-Page Content Stream */}
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         <Hero />
-        <ProjectShowcase onSelectProject={(p) => setSelectedProject(p)} />
+        <ProjectShowcase onSelectProject={handleOpenProject} />
         <About />
         <Experience />
         <Skills />
@@ -36,9 +53,19 @@ export function App() {
       {/* Detailed Case-Study Modal */}
       <ProjectDetailModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={handleCloseProject}
       />
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <ThemeProvider>
+      <SmoothScrollProvider>
+        <PortfolioContent />
+      </SmoothScrollProvider>
+    </ThemeProvider>
   );
 }
 

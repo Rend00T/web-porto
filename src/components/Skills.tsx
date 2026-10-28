@@ -21,19 +21,19 @@ export const Skills: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="py-20 sm:py-28 bg-[#FAFAFA]">
+    <section id="skills" className="py-20 sm:py-28 relative z-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="space-y-2 mb-12">
-          <div className="flex items-center space-x-2 text-xs font-mono font-semibold uppercase tracking-widest text-blue-600">
-            <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+          <div className="flex items-center space-x-2 text-xs font-mono font-semibold uppercase tracking-widest text-[#858585] dark:text-[#737373]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#171717] dark:bg-white"></span>
             <span>Technical Capabilities</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#171717] dark:text-white">
             Skills &amp; Technologies.
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 max-w-xl">
+          <p className="text-sm sm:text-base text-[#666666] dark:text-[#A3A3A3] max-w-xl">
             Technologies practiced through university coursework, engineering internships, and applied project implementations.
           </p>
         </div>
@@ -45,33 +45,33 @@ export const Skills: React.FC = () => {
             return (
               <div
                 key={group.category}
-                className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                className="p-6 rounded-2xl bg-white dark:bg-[#141414] border border-[#E5E5E5] dark:border-[#262626] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors shadow-xs flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center space-x-3 mb-2">
-                    <div className="p-2 rounded-lg bg-slate-100 text-slate-800">
+                    <div className="p-2 rounded-lg bg-[#F2F2F2] dark:bg-[#1E1E1E] text-[#171717] dark:text-white border border-[#E5E5E5] dark:border-[#2E2E2E]">
                       <Icon className="w-4 h-4" />
                     </div>
-                    <h3 className="font-bold text-slate-900 text-base">
+                    <h3 className="font-display font-bold text-[#171717] dark:text-white text-base">
                       {group.category}
                     </h3>
                   </div>
 
-                  <p className="text-xs text-slate-500 mb-5 leading-relaxed">
+                  <p className="text-xs text-[#666666] dark:text-[#A3A3A3] mb-5 leading-relaxed">
                     {group.description}
                   </p>
                 </div>
 
                 {/* Skill Chips */}
-                <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[#E5E5E5] dark:border-[#242424]">
                   {group.skills.map((skill) => (
                     <div
                       key={skill.name}
-                      className="group/chip inline-flex items-center space-x-1 px-2.5 py-1 rounded-md bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 text-xs font-mono border border-slate-200/80 hover:border-blue-200 transition-colors"
+                      className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-[#F2F2F2] dark:bg-[#1C1C1C] hover:bg-[#EBEBEB] dark:hover:bg-[#252525] text-[#171717] dark:text-neutral-200 text-xs font-mono border border-[#E5E5E5] dark:border-[#2E2E2E] transition-colors"
                     >
                       <span>{skill.name}</span>
                       {skill.highlightProject && (
-                        <span className="text-[9px] font-sans font-semibold text-blue-500 bg-blue-100/70 px-1 rounded">
+                        <span className="text-[9px] font-sans font-medium text-[#666666] dark:text-neutral-300 bg-white dark:bg-[#282828] px-1 rounded border border-[#E5E5E5] dark:border-[#383838]">
                           {skill.highlightProject}
                         </span>
                       )}
@@ -84,9 +84,9 @@ export const Skills: React.FC = () => {
         </div>
 
         {/* Technical Honesty Note */}
-        <div className="mt-8 p-4 rounded-xl bg-slate-100/70 border border-slate-200/80 text-xs text-slate-500 flex items-center justify-between flex-wrap gap-2 font-mono">
+        <div className="mt-8 p-4 rounded-xl bg-neutral-100 dark:bg-[#141414] border border-[#E5E5E5] dark:border-[#262626] text-xs text-[#666666] dark:text-[#A3A3A3] flex items-center justify-between flex-wrap gap-2 font-mono">
           <span>*Skills reflect hands-on coursework &amp; practical projects; no synthetic percentage ratings.</span>
-          <span className="text-slate-400">ITS FTEIC • 2024–Present</span>
+          <span className="text-[#858585] dark:text-[#737373]">ITS FTEIC • 2024–Present</span>
         </div>
 
       </div>

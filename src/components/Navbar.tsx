@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileDown, ArrowUpRight } from 'lucide-react';
+import { Menu, X, FileDown, Sun, Moon } from 'lucide-react';
+import { useSmoothScroll } from '../context/SmoothScrollContext';
+import { useTheme } from '../context/ThemeContext';
 
-interface NavbarProps {
-  onDownloadCv?: () => void;
-}
-
-export const Navbar: React.FC<NavbarProps> = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const { scrollTo } = useSmoothScroll();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-
       const sections = ['work', 'about', 'experience', 'skills', 'certifications', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
@@ -30,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -43,47 +40,51 @@ export const Navbar: React.FC<NavbarProps> = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (href === '#') {
+      scrollTo(0);
+      window.history.pushState(null, '', ' ');
+    } else {
+      scrollTo(href);
+      window.history.pushState(null, '', href);
+    }
+  };
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/85 backdrop-blur-md border-b border-slate-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.03)] py-3'
-          : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+    <header className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] sm:w-auto max-w-5xl">
+      {/* Floating Pill Navigation Container */}
+      <div className="bg-white/85 dark:bg-[#141414]/90 backdrop-blur-xl border border-[#E5E5E5] dark:border-[#282828] rounded-full px-3 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all duration-200">
         
-        {/* Brand / Monogram */}
+        {/* Brand Label */}
         <a
           href="#"
-          className="group flex items-center space-x-3 text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg"
-          aria-label="Raihan Fahri Ghazali - Home"
+          onClick={(e) => handleNavClick(e, '#')}
+          className="flex items-center space-x-2 pl-1 pr-2 py-1 rounded-full group focus:outline-none"
+          aria-label="Raihan Fahri - Home"
         >
-          <div className="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center font-extrabold text-sm tracking-tight shadow-sm group-hover:bg-blue-600 transition-colors">
-            RFG
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold text-sm tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
-              Raihan Fahri
-            </span>
-            <span className="text-[10px] font-mono text-slate-500 leading-none">
-              ITS Surabaya
-            </span>
-          </div>
+          <span className="w-6 h-6 rounded-full bg-[#171717] dark:bg-white text-white dark:text-[#171717] flex items-center justify-center font-bold text-[10px] tracking-tight transition-transform group-hover:scale-105">
+            RF
+          </span>
+          <span className="font-mono text-xs font-semibold tracking-tight text-[#171717] dark:text-[#F5F5F5]">
+            raihan<span className="text-[#858585] dark:text-[#737373]">.dev</span>
+          </span>
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+        <nav className="hidden md:flex items-center space-x-1">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
             return (
               <a
                 key={link.name}
                 href={link.href}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium tracking-wide transition-colors ${
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={`px-3 py-1.5 rounded-full text-xs font-mono tracking-tight transition-all duration-150 ${
                   isActive
-                    ? 'text-blue-600 bg-blue-50/80 font-semibold'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+                    ? 'bg-[#171717] dark:bg-white text-white dark:text-[#171717] font-semibold shadow-xs'
+                    : 'text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white hover:bg-[#F2F2F2] dark:hover:bg-[#202020]'
                 }`}
               >
                 {link.name}
@@ -92,80 +93,80 @@ export const Navbar: React.FC<NavbarProps> = () => {
           })}
         </nav>
 
-        {/* Header Right CTA */}
-        <div className="hidden sm:flex items-center space-x-3">
+        {/* Right Actions: Theme Toggle + CV + Mobile Menu */}
+        <div className="flex items-center space-x-1 sm:space-x-2">
+          {/* Light / Dark Mode Toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="p-1.5 sm:p-2 rounded-full text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white hover:bg-[#F2F2F2] dark:hover:bg-[#222222] transition-colors focus:outline-none"
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {theme === 'dark' ? (
+              <Sun className="w-4 h-4 text-neutral-300 hover:text-white transition-colors" />
+            ) : (
+              <Moon className="w-4 h-4 text-neutral-700 hover:text-black transition-colors" />
+            )}
+          </button>
+
+          {/* Download CV CTA */}
           <a
             href="/CV_Raihan_Fahri_Ghazali.pdf"
             download="CV_Raihan_Fahri_Ghazali.pdf"
-            className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold border border-slate-200/80 transition-all shadow-xs"
+            className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-[#F2F2F2] dark:bg-[#202020] hover:bg-[#EBEBEB] dark:hover:bg-[#2A2A2A] text-[#171717] dark:text-[#F5F5F5] text-xs font-mono font-medium border border-[#E5E5E5] dark:border-[#333333] transition-colors"
           >
-            <FileDown className="w-3.5 h-3.5 text-slate-600" />
+            <FileDown className="w-3.5 h-3.5 text-[#666666] dark:text-[#A3A3A3]" />
             <span>CV</span>
           </a>
 
-          <a
-            href="#contact"
-            className="inline-flex items-center space-x-1 px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-blue-600 text-white text-xs font-semibold transition-all shadow-sm"
-          >
-            <span>Let's Talk</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
-
-        {/* Mobile Hamburger Button */}
-        <div className="flex sm:hidden items-center space-x-2">
-          <a
-            href="/CV_Raihan_Fahri_Ghazali.pdf"
-            download="CV_Raihan_Fahri_Ghazali.pdf"
-            className="p-2 rounded-lg bg-slate-100 text-slate-700 text-xs"
-            aria-label="Download CV"
-          >
-            <FileDown className="w-4 h-4" />
-          </a>
+          {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none"
+            className="md:hidden p-1.5 rounded-full text-[#171717] dark:text-[#F5F5F5] hover:bg-[#F2F2F2] dark:hover:bg-[#222222] border border-[#E5E5E5] dark:border-[#282828] focus:outline-none"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
 
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Dropdown */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-white/95 backdrop-blur-lg border-b border-slate-200 px-5 pt-3 pb-6 shadow-xl animate-fadeIn">
-          <div className="flex flex-col space-y-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="pt-3 border-t border-slate-100 flex flex-col space-y-2">
+        <div className="md:hidden mt-2 bg-white/95 dark:bg-[#141414]/95 backdrop-blur-xl border border-[#E5E5E5] dark:border-[#282828] rounded-2xl p-4 shadow-xl animate-fadeIn">
+          <div className="flex flex-col space-y-1">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.substring(1);
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`px-3 py-2 rounded-xl text-xs font-mono transition-colors ${
+                    isActive
+                      ? 'bg-[#171717] dark:bg-white text-white dark:text-[#171717] font-semibold'
+                      : 'text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white hover:bg-[#F2F2F2] dark:hover:bg-[#202020]'
+                  }`}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
+            <div className="pt-2 mt-1 border-t border-[#E5E5E5] dark:border-[#282828] flex items-center justify-between">
               <a
                 href="/CV_Raihan_Fahri_Ghazali.pdf"
                 download="CV_Raihan_Fahri_Ghazali.pdf"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-lg bg-slate-100 text-slate-800 text-xs font-semibold"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#F2F2F2] dark:bg-[#202020] text-[#171717] dark:text-[#F5F5F5] text-xs font-mono border border-[#E5E5E5] dark:border-[#333333]"
               >
-                <FileDown className="w-4 h-4" />
-                <span>Download CV (PDF)</span>
+                <FileDown className="w-3.5 h-3.5 text-[#666666] dark:text-[#A3A3A3]" />
+                <span>Download CV</span>
               </a>
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-sm"
-              >
-                <span>Get in Touch</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
+
+              <span className="text-[11px] font-mono text-[#858585] dark:text-[#737373]">
+                ITS Surabaya
+              </span>
             </div>
           </div>
         </div>

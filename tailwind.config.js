@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,24 +9,31 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['Space Grotesk', 'Plus Jakarta Sans', 'Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       colors: {
-        surface: {
-          50: '#F8F9FA',
-          100: '#F1F3F5',
-          200: '#E9ECEF',
-          300: '#DEE2E6',
-          800: '#1E232A',
-          900: '#0F1318',
-          950: '#090B0E',
+        dark: {
+          bg: '#0B0B0B',
+          surface: '#111111',
+          card: '#171717',
+          cardHover: '#202020',
+          border: '#292929',
+          borderSubtle: '#1F1F1F',
+          text: '#F5F5F5',
+          secondary: '#A3A3A3',
+          muted: '#737373',
         },
-        brand: {
-          50: '#EFF6FF',
-          100: '#DBEAFE',
-          500: '#3B82F6',
-          600: '#2563EB',
-          700: '#1D4ED8',
+        light: {
+          bg: '#FAFAFA',
+          surface: '#F2F2F2',
+          card: '#FFFFFF',
+          cardHover: '#EBEBEB',
+          border: '#E5E5E5',
+          borderSubtle: '#EDEDED',
+          text: '#171717',
+          secondary: '#666666',
+          muted: '#858585',
         }
       }
     },
