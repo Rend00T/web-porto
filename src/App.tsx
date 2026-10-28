@@ -7,8 +7,7 @@ import { Hero } from './components/Hero';
 import { ProjectShowcase } from './components/ProjectShowcase';
 import { About } from './components/About';
 import { Experience } from './components/Experience';
-import { Skills } from './components/Skills';
-import { Certifications } from './components/Certifications';
+import { TechnicalProfile } from './components/TechnicalProfile';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
@@ -30,27 +29,20 @@ function PortfolioContent() {
 
   return (
     <div className="min-h-screen relative flex flex-col bg-[#FAFAFA] dark:bg-[#0B0B0B] text-[#171717] dark:text-[#F5F5F5] font-sans transition-colors duration-200">
-      {/* Global Subtle Background Grid */}
       <BackgroundGrid />
-
-      {/* Floating Pill Top Navigation */}
       <Navbar />
 
-      {/* Main Single-Page Content Stream */}
       <main className="flex-1 relative z-10">
         <Hero />
-        <ProjectShowcase onSelectProject={handleOpenProject} />
         <About />
         <Experience />
-        <Skills />
-        <Certifications />
+        <ProjectShowcase onSelectProject={handleOpenProject} />
+        <TechnicalProfile />
         <Contact />
       </main>
 
-      {/* Footer */}
       <Footer />
 
-      {/* Detailed Case-Study Modal */}
       <ProjectDetailModal
         project={selectedProject}
         onClose={handleCloseProject}

@@ -11,8 +11,8 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['work', 'about', 'experience', 'skills', 'certifications', 'contact'];
-      const scrollPosition = window.scrollY + 200;
+      const sections = ['home', 'about', 'experience', 'work', 'technical-profile', 'contact'];
+      const scrollPosition = window.scrollY + 220;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -28,39 +28,38 @@ export const Navbar: React.FC = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Work', href: '#work' },
+    { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Experience', href: '#experience' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Certifications', href: '#certifications' },
+    { name: 'Portfolio', href: '#work' },
     { name: 'Contact', href: '#contact' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    if (href === '#') {
-      scrollTo(0);
-      window.history.pushState(null, '', ' ');
-    } else {
-      scrollTo(href);
-      window.history.pushState(null, '', href);
+
+    if (href === '#home') {
+      scrollTo('#home');
+      window.history.pushState(null, '', '#home');
+      return;
     }
+
+    scrollTo(href);
+    window.history.pushState(null, '', href);
   };
 
   return (
     <header className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] sm:w-auto max-w-5xl">
-      {/* Floating Pill Navigation Container */}
       <div className="bg-white/85 dark:bg-[#141414]/90 backdrop-blur-xl border border-[#E5E5E5] dark:border-[#282828] rounded-full px-3 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all duration-200">
-        
-        {/* Brand Label */}
         <a
-          href="#"
-          onClick={(e) => handleNavClick(e, '#')}
+          href="#home"
+          onClick={(e) => handleNavClick(e, '#home')}
           className="flex items-center space-x-2 pl-1 pr-2 py-1 rounded-full group focus:outline-none"
           aria-label="Raihan Fahri - Home"
         >
@@ -72,7 +71,6 @@ export const Navbar: React.FC = () => {
           </span>
         </a>
 
-        {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center space-x-1">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
@@ -93,9 +91,7 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* Right Actions: Theme Toggle + CV + Mobile Menu */}
         <div className="flex items-center space-x-1 sm:space-x-2">
-          {/* Light / Dark Mode Toggle */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
@@ -109,7 +105,6 @@ export const Navbar: React.FC = () => {
             )}
           </button>
 
-          {/* Download CV CTA */}
           <a
             href="/CV_Raihan_Fahri_Ghazali.pdf"
             download="CV_Raihan_Fahri_Ghazali.pdf"
@@ -119,7 +114,6 @@ export const Navbar: React.FC = () => {
             <span>CV</span>
           </a>
 
-          {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-1.5 rounded-full text-[#171717] dark:text-[#F5F5F5] hover:bg-[#F2F2F2] dark:hover:bg-[#222222] border border-[#E5E5E5] dark:border-[#282828] focus:outline-none"
@@ -129,10 +123,8 @@ export const Navbar: React.FC = () => {
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-
       </div>
 
-      {/* Mobile Drawer Dropdown */}
       {mobileMenuOpen && (
         <div className="md:hidden mt-2 bg-white/95 dark:bg-[#141414]/95 backdrop-blur-xl border border-[#E5E5E5] dark:border-[#282828] rounded-2xl p-4 shadow-xl animate-fadeIn">
           <div className="flex flex-col space-y-1">

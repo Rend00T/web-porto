@@ -14,10 +14,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="relative z-10 py-12 border-t border-[#E5E5E5] dark:border-[#222222] text-xs">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[#E5E5E5] dark:border-[#222222]">
-          
-          {/* Brand info */}
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 rounded-full bg-[#171717] dark:bg-white text-white dark:text-[#171717] flex items-center justify-center font-bold text-xs tracking-tight">
               RF
@@ -32,12 +29,11 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick links */}
           <div className="flex items-center space-x-5 text-xs font-mono">
-            <a href="#work" onClick={(e) => handleLinkClick(e, '#work')} className="text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white transition-colors">Work</a>
+            <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white transition-colors">Home</a>
             <a href="#about" onClick={(e) => handleLinkClick(e, '#about')} className="text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white transition-colors">About</a>
             <a href="#experience" onClick={(e) => handleLinkClick(e, '#experience')} className="text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white transition-colors">Experience</a>
-            <a href="#skills" onClick={(e) => handleLinkClick(e, '#skills')} className="text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white transition-colors">Skills</a>
+            <a href="#work" onClick={(e) => handleLinkClick(e, '#work')} className="text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white transition-colors">Portfolio</a>
             <a href="#contact" onClick={(e) => handleLinkClick(e, '#contact')} className="text-[#666666] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white transition-colors">Contact</a>
             <a
               href="/CV_Raihan_Fahri_Ghazali.pdf"
@@ -49,7 +45,6 @@ export const Footer: React.FC = () => {
             </a>
           </div>
 
-          {/* Back to top button connected to Lenis */}
           <button
             onClick={() => scrollTo(0)}
             aria-label="Back to top"
@@ -60,7 +55,6 @@ export const Footer: React.FC = () => {
           </button>
         </div>
 
-        {/* Bottom copyright & attribution */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono text-[#858585] dark:text-[#666666]">
           <div>
             &copy; {new Date().getFullYear()} Raihan Fahri Ghazali. All rights reserved.
@@ -69,7 +63,6 @@ export const Footer: React.FC = () => {
             Built with React, TypeScript &amp; Tailwind CSS • Dark/Light Mode • Lenis Smooth Scroll
           </div>
         </div>
-
       </div>
     </footer>
   );

@@ -66,20 +66,5 @@ export const experienceData: ExperienceItem[] = [
       'Collaborated with organizational leadership on internal member engagement initiatives.'
     ],
     technologies: ['Public Speaking', 'Event Coordination', 'Data Mapping', 'Team Collaboration']
-  },
-  {
-    id: 'ilits-2024',
-    role: 'Staff Finance — ILITS Jakarta 2024',
-    organization: 'Ini Lho ITS! (ILITS) Regional Jakarta',
-    location: 'Jakarta, Indonesia',
-    period: 'December 2024 – January 2025',
-    category: 'organization',
-    description: 'Supported budgeting, sales campaigns, and financial stewardship for university outreach in Jakarta.',
-    highlights: [
-      'Executed merchandise sales drives and fundraising campaigns to support event operational financing.',
-      'Ensured financial accountability and transparent transaction records for campus outreach activities.',
-      'Facilitated orientation and information sessions introducing ITS academic programs to high school students in Jakarta.'
-    ],
-    technologies: ['Financial Planning', 'Merchandise Sales', 'Budget Tracking', 'Event Outreach']
   }
 ];
